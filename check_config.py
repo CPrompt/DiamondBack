@@ -57,7 +57,9 @@ data = {
 
 logging.basicConfig(filename='error.log',level=logging.DEBUG)
 
-def directory_is_writable(path):
+class check_config:
+
+    def directory_is_writable(self,path):
 	'''
 	Returns True if the specified directory exists and is writable
 	by the current user.
@@ -66,25 +68,25 @@ def directory_is_writable(path):
 	return os.path.isdir(path) and os.access(path, os.W_OK)
 
 
-def check_for_config_files():
-	for files in diamond_back_files:
-		try:
-			with open(files) as f : pass
-			pass
-		except IOError as e:
-			#	Try to create file
-			for files in diamond_back_files:
-				if(files == diamond_back_config):
-					with open(diamond_back_config, 'w') as outfile:
-						json.dump(data, outfile, sort_keys = True, indent = 4)
-						outfile.close()
-						logging.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
-				else:
-					files = open(files, 'w+')
-					logging.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
+    def check_for_config_files(self):
+        for files in diamond_back_files:
+            try:
+                with open(files) as f : pass
+                pass
+            except IOError as e:
+            # Try to create file
+                for files in diamond_back_files:
+                    if(files == diamond_back_config):
+                        with open(diamond_back_config, 'w') as outfile:
+                            json.dump(data, outfile, sort_keys = True, indent = 4)
+                            outfile.close()
+                            loging.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
+                    else:
+                        files = open(files, 'w+')
+                        logging.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
 
 
-def check_for_configs():
+    def check_for_configs(slef):
 	#	first check if the config directory is there
 	if (directory_is_writable(diamond_back_home)):
 		try:
@@ -105,5 +107,5 @@ def check_for_configs():
 
 
 #	For testing
-check_for_configs()
-
+x = check_for_configs()
+x.check_for_configs()
