@@ -31,7 +31,8 @@ import logging
 #import data_log
 from data_log import log_action
 from time import strftime
-from check_directory import check_directory
+#from check_directory import check_directory
+from check_config import check_config
 
 logging.basicConfig(filename='errors.log',level=logging.DEBUG)
 
@@ -47,7 +48,7 @@ class BackupData():
 	def check_files():
 		# Check for config directory and files
 		print "Checking for config files"
-		config_check = check_directory()
+		config_check = check_config()
 		config_check.check_for_configs()
 
 	#	backup compression
