@@ -29,7 +29,7 @@ import logging
 import json
 
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
-diamond_back_config = os.path.join(diamond_back_home, 'diamondback.cfg')
+diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
 diamond_back_out = os.path.join(diamond_back_home, 'out.log')
 diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
 
@@ -92,6 +92,8 @@ class check_config:
 		try:
 		#	directory is there, move on to files
 			check_for_config_files()
+                #       BUG 101
+                #       read the json file for the config options???
 		except:
 			print "ERROR!"
 			#logging.error("Directory is there but could not create files")
