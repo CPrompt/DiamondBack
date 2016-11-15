@@ -80,18 +80,18 @@ class check_config:
                         with open(diamond_back_config, 'w') as outfile:
                             json.dump(data, outfile, sort_keys = True, indent = 4)
                             outfile.close()
-                            loging.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
+                            logging.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
                     else:
                         files = open(files, 'w+')
                         logging.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
 
 
-    def check_for_configs(slef):
+    def check_for_configs(self):
 	#	first check if the config directory is there
-	if (directory_is_writable(diamond_back_home)):
+        if (self.directory_is_writable(diamond_back_home)):
 		try:
 		#	directory is there, move on to files
-			check_for_config_files()
+			self.check_for_config_files()
                 #       BUG 101
                 #       read the json file for the config options???
 		except:
@@ -103,11 +103,11 @@ class check_config:
 			os.makedirs(diamond_back_home)
 			print "Directory Created"
 			#	Now go back and check for config files
-			check_for_config_files()
+			self.check_for_config_files()
 		except:
 			logging.error("Could not create file")
 
 
 #	For testing
-x = check_for_configs()
+x = check_config()
 x.check_for_configs()
