@@ -109,5 +109,5 @@ class check_config:
 
 
 #	For testing
-x = check_config()
-x.check_for_configs()
+# x = check_config()
+# x.check_for_configs()

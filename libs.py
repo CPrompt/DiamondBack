@@ -46,7 +46,7 @@ myTime = strftime("%Y-%m-%d-%H%M%S")
 
 class BackupData():
 
-	def check_files():
+	def check_files(self):
 		# Check for config directory and files
 		print "Checking for config files"
 		config_check = check_config()
@@ -61,6 +61,7 @@ class BackupData():
 
 		if os.path.exists(directory_of_backup):
 			print "Directory is there and ready"
+
 			pass
 		else:
 			log_action("error")
