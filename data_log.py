@@ -2,19 +2,19 @@
 # -*- coding: utf-8 -*-
 #
 #  data_log.py
-#  
+#
 #  Copyright 2012 Curtis Adkins <curtis@wayne-manor>
-#  
+#
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
 #  the Free Software Foundation; either version 2 of the License, or
 #  (at your option) any later version.
-#  
+#
 #  This program is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
-#  
+#
 #  You should have received a copy of the GNU General Public License
 #  along with this program; if not, write to the Free Software
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
@@ -38,20 +38,20 @@ def capture_time():
 def log_action(my_action):
 	try:
 		check_for_configs()
-		
-		saveout = sys.stdout                  
-		fsock = open(diamond_back_out, 'a')                              
+
+		saveout = sys.stdout
+		fsock = open(diamond_back_out, 'a')
 		sys.stdout = fsock
-	
+
 		#	capture the current time
 		capture_time()
-	
+
 		my_log = "******************************************************************* \n"
-	
+
 		if my_action == "start":
 			capture_time()
 			my_log = my_log +  "Backup Starting at : %s  \n" % (capture_time())
-			print my_log	
+			print my_log
 		elif my_action == "end":
 			capture_time()
 			my_log = "Backup Complete at : %s  \n" % (capture_time())
@@ -66,12 +66,12 @@ def log_action(my_action):
 			print my_log
 		else:
 			print my_action
-	
-		sys.stdout = saveout                                      
+
+		sys.stdout = saveout
 		fsock.close()
 	except:
 		print "ERROR!"
-	
+
 '''
 
 	Usage

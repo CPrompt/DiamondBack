@@ -92,8 +92,6 @@ class check_config:
 		try:
 		#	directory is there, move on to files
 			self.check_for_config_files()
-                #       BUG 101
-                #       read the json file for the config options???
 		except:
 			print "ERROR!"
 			#logging.error("Directory is there but could not create files")

@@ -43,7 +43,12 @@ myTime = strftime("%Y-%m-%d-%H%M%S")
 	are being backed up and where they are going
 '''
 
-
+'''
+vars needed:
+    backupName
+    ignored_files
+    files_for_backup
+'''
 class BackupData():
 
 	def check_files(self):
@@ -61,8 +66,14 @@ class BackupData():
 
 		if os.path.exists(directory_of_backup):
 			print "Directory is there and ready"
-
-			pass
+			# Is this where we need to start the reading of the json config file?
+                        # Possibly we need to move the actual compression method here.
+                        # at this point, we have
+                        #   1. confirmed that the directory exists
+                        #   2. next we will need to confirm the config files are there
+                        #   3. then try to read the files
+                        #   given all of that, start the backup process
+                        pass
 		else:
 			log_action("error")
 			raise OSError ("Directory does not exist!")
