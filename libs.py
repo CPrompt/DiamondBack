@@ -26,12 +26,9 @@ import os
 import shutil
 import sys
 import glob
-#import config
 import logging
-#import data_log
 from data_log import log_action
 from time import strftime
-#from check_directory import check_directory
 from check_config import check_config
 from read_json import output_config
 
