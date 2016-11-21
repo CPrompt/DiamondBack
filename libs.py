@@ -60,70 +60,67 @@ class BackupData():
 	#	backup compression
 	def compress_backup(self,backupName):
 
-		print directory_of_backup
-		#	log the start of the backup
-		log_action("start")
+                #check for the config files
+                try:
+                    check_files(self)
+                    pass
 
-		if os.path.exists(directory_of_backup):
-			print "Directory is there and ready"
-			# Is this where we need to start the reading of the json config file?
-                        # Possibly we need to move the actual compression method here.
-                        # at this point, we have
-                        #   1. confirmed that the directory exists
-                        #   2. next we will need to confirm the config files are there
-                        #   3. then try to read the files
-                        #   given all of that, start the backup process
-                        pass
-		else:
-			log_action("error")
-			raise OSError ("Directory does not exist!")
+                    # since the directory is there and the config files are there,
+                    # read the config file and move on
 
-		# need to output this data to the log file as well
-		os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
+                    # need to output this data to the log file as well
+                    os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
 
 
-		#	Start the backup process
-		file1 = ('%s_%s.7z' % (backupName,myTime))
+                    # Start the backup process
+                    file1 = ('%s_%s.7z' % (backupName,myTime))
 
-		#	Create a directory where the backup files will be stored
-		timeDirectory = os.mkdir(directory_of_backup + myTime)
-		tempDir = directory_of_backup + myTime
-		path = os.getcwd()
+                    # Create a directory where the backup files will be stored
+                    timeDirectory = os.mkdir(directory_of_backup + myTime)
+                    tempDir = directory_of_backup + myTime
+                    path = os.getcwd()
 
-		#	move the files to the backup directory
-		# 	need to add the _pylog to this processes
-		for name in glob.glob(path + '//*.7z.*' & path + '//*_pylog'):
-			shutil.move(name,tempDir)
+                    # move the files to the backup directory
+                    # need to add the _pylog to this processes
+                    for name in glob.glob(path + '//*.7z.*' & path + '//*_pylog'):
+                        shutil.move(name,tempDir)
 
-		#	log the end of the process and completion
-		log_action("end")
-		log_action("complete")
+                    # log the end of the process and completion
+                        log_action("end")
+                        log_action("complete")
 
 
-		#  Need something here that will determine if we want to do a redundant backup
-		#  Possible just looking to see if the redundant_backup section is complete
-		#  in the config file.  If it is, then we need to make sure the path
-		#  specified is reachable
+                    #  Need something here that will determine if we want to do a redundant backup
+                    #  Possible just looking to see if the redundant_backup section is complete
+                    #  in the config file.  If it is, then we need to make sure the path
+                    #  specified is reachable
 
-		'''
-		redundantTime = strftime("%Y-%m-%d-%H%M%S")
-		redundantAction = " ***** Starting RSync Process ***** \n"
-		redundantAction = redundantAction + "%s \n" % (redundantTime)
-		self.logAction(redundantTime)
-		'''
+                    '''
+                        redundantTime = strftime("%Y-%m-%d-%H%M%S")
+                        redundantAction = " ***** Starting RSync Process ***** \n"
+                        redundantAction = redundantAction + "%s \n" % (redundantTime)
+                        self.logAction(redundantTime)
+                    '''
 
-		'''
-		os.system('rsync -avz %s %s' % (directory_of_backup,redundant_directory))
-		redundantEnd = strftime("%Y-%m-%d-%H%M%S")
-		redundantEndAction = "Rsync Complete at %s \n" % (redundantEnd)
-		redundantEndAction = redundantEndAction + "*******************************************************************"
-		self.logAction(redundantEndAction)
-		'''
-		#	Look at the config file for the redundant backup directory
-		#	and make sure it exists
-		if directory_is_writable(redundant_backup_directory):
-			print "Redundant directory is there and ready"
-		else:
-			print "Redundant directory is not there"
-			logging.error("Redundant directory is not there")
+                    '''
+                        os.system('rsync -avz %s %s' % (directory_of_backup,redundant_directory))
+                        redundantEnd = strftime("%Y-%m-%d-%H%M%S")
+                        redundantEndAction = "Rsync Complete at %s \n" % (redundantEnd)
+                        redundantEndAction = redundantEndAction + "*******************************************************************"
+                        self.logAction(redundantEndAction)
+                    '''
+                    # Look at the config file for the redundant backup directory
+                    # and make sure it exists
+                    if directory_is_writable(redundant_backup_directory):
+                        print "Redundant directory is there and ready"
+                    else:
+                        print "Redundant directory is not there"
+                        logging.error("Redundant directory is not there")
+
+
+
+                except:
+                    logging.error("Could not create directory or files needed")
+                    # stop here
+                    sys.exit(0)
 

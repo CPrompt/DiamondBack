@@ -42,15 +42,15 @@ data = {
 
         "title": "BACKUP",
 
-        "directories": {
+        "directories": [{
             "directoryBackup": "/home/curtis/Programming/DiamondBack_dev/folder2/",
             "redundantBackup": "/path/to/redundant/backup"
-        },
+        }],
 
-        "files": {
+        "files": [{
             "filesBackup": "/home/curtis/.config/diamondback/filelist",
             "outputFile": "/home/curtis/.config/diamondback/out.log"
-        }
+        }]
 
     }
 }
@@ -94,7 +94,7 @@ class check_config:
 			self.check_for_config_files()
 		except:
 			print "ERROR!"
-			#logging.error("Directory is there but could not create files")
+			logging.error("Directory is there but could not create files")
 	else:
 		#	Try to create the config directory
 		try:
@@ -107,5 +107,5 @@ class check_config:
 
 
 #	For testing
-# x = check_config()
-# x.check_for_configs()
+#x = check_config()
+#x.check_for_configs()
