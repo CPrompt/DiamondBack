@@ -49,7 +49,8 @@ data = {
 
         "files": [{
             "filesBackup": "/home/curtis/.config/diamondback/filelist",
-            "outputFile": "/home/curtis/.config/diamondback/out.log"
+            "outputFile": "/home/curtis/.config/diamondback/out.log",
+            "ignoredFiles": "/home/curtis/.config/diamondback/ignored"
         }]
 
     }
