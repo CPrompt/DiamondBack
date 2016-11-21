@@ -83,6 +83,7 @@ class BackupData():
                     shutil.move(name,tempDir)
 
                  # log the end of the process and completion
+                logging.info("Backup complete at %s" % (myTime))
                 '''
                 log_action("end")
                 log_action("complete")
