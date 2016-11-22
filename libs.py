@@ -30,6 +30,8 @@ import logging
 from time import strftime
 from check_config import check_config
 from read_json import output_config
+from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
+from purge_files import remove_old_files
 
 logging.basicConfig(filename='errors.log',level=logging.DEBUG)
 
@@ -48,7 +50,6 @@ class BackupData():
 
 	def check_files(self):
 		# Check for config directory and files
-		print "Checking for config files"
 		config_check = check_config()
 		config_check.check_for_configs()
 
@@ -58,33 +59,37 @@ class BackupData():
                 # check for the config files
                 self.check_files()
 
+                # going to move this off to it's own module to make it more "global"?
+                # keeping this because we might move it back
+
                 # set varialbe names from the read_json file
-                backupName = output_config()["backupprefs"]["title"]
-                directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
-                redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
-                files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
-                ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
+                #backupName = output_config()["backupprefs"]["title"]
+                #directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
+                #redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
+                #files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
+                #ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
 
                 # at this point we have confirmed the files needed are there and we can read the config file
                 # now we need to make sure the backup directory is actually there and ready
 
                 if(self.directory_is_writable(directory_of_backup)):
 
+                    # check to see if we need to clear out any previous backups
+                    remove_old_files()
+
+
                     # start the compression
                     os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
 
-                     # Start the backup process
+                    # Start the backup process
                     file1 = ('%s_%s.7z' % (backupName,myTime))
 
-                     # Create a directory where the backup files will be stored
-                    timeDirectory = os.mkdir(directory_of_backup + myTime)
-                    tempDir = directory_of_backup + myTime
+                    # need to make sure where we are because that's where the compressed file will be
                     path = os.getcwd()
 
-                     # move the files to the backup directory
-                     # need to add the _pylog to this processes
+                    # move the files to the backup directory
                     for name in glob.glob(path + '//*.7z.*'):
-                        shutil.move(name,tempDir)
+                        shutil.move(name,directory_of_backup)
 
                 else:
                     logging.error("The backup directory does not appear to be set or ready!")
