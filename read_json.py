@@ -24,7 +24,9 @@
 
 import json
 import os
+import logging
 
+logging.basicConfig(filename='errors.log',level=logging.DEBUG)
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
 diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
 
@@ -34,6 +36,8 @@ def read_json():
         data = json.load(json_data)
     except:
         print("Can't open")
+        logging.error("Could not open config file")
+
 
     return data
 

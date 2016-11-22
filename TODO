@@ -1,0 +1,4 @@
+1.  Check for redundant backup procedure
+2.  Log all activities?
+3.  delete backups older than the given month
+4.  Fix the config file that is created

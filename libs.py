@@ -82,12 +82,6 @@ class BackupData():
                 for name in glob.glob(path + '//*.7z.*'):
                     shutil.move(name,tempDir)
 
-                 # log the end of the process and completion
-                logging.info("Backup complete at %s" % (myTime))
-                '''
-                log_action("end")
-                log_action("complete")
-                '''
 
                 '''
                 redundantTime = strftime("%Y-%m-%d-%H%M%S")
