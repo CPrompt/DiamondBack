@@ -65,34 +65,35 @@ class BackupData():
                 files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
                 ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
 
-                # start the compression
-                os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
+                # at this point we have confirmed the files needed are there and we can read the config file
+                # now we need to make sure the backup directory is actually there and ready
 
-                 # Start the backup process
-                file1 = ('%s_%s.7z' % (backupName,myTime))
+                if(self.directory_is_writable(directory_of_backup)):
 
-                 # Create a directory where the backup files will be stored
-                timeDirectory = os.mkdir(directory_of_backup + myTime)
-                tempDir = directory_of_backup + myTime
-                path = os.getcwd()
+                    # start the compression
+                    os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
 
-                 # move the files to the backup directory
-                 # need to add the _pylog to this processes
-                for name in glob.glob(path + '//*.7z.*'):
-                    shutil.move(name,tempDir)
+                     # Start the backup process
+                    file1 = ('%s_%s.7z' % (backupName,myTime))
+
+                     # Create a directory where the backup files will be stored
+                    timeDirectory = os.mkdir(directory_of_backup + myTime)
+                    tempDir = directory_of_backup + myTime
+                    path = os.getcwd()
+
+                     # move the files to the backup directory
+                     # need to add the _pylog to this processes
+                    for name in glob.glob(path + '//*.7z.*'):
+                        shutil.move(name,tempDir)
+
+                else:
+                    logging.error("The backup directory does not appear to be set or ready!")
+                    sys.exit(1)
 
 
-                '''
-                redundantTime = strftime("%Y-%m-%d-%H%M%S")
-                redundantAction = " ***** Starting RSync Process ***** \n"
-                redundantAction = redundantAction + "%s \n" % (redundantTime)
-                self.logAction(redundantTime)
-                '''
+                if(self.directory_is_writable(redundant_backup_directory)):
+                    os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
+                else:
+                    logging.error("Either no redundant backup directory exists or it has not been set")
+                    sys.exit(1)
 
-                '''
-                os.system('rsync -avz %s %s' % (directory_of_backup,redundant_directory))
-                redundantEnd = strftime("%Y-%m-%d-%H%M%S")
-                redundantEndAction = "Rsync Complete at %s \n" % (redundantEnd)
-                redundantEndAction = redundantEndAction + "*******************************************************************"
-                self.logAction(redundantEndAction)
-                '''
