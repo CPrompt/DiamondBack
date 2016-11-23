@@ -39,13 +39,16 @@ def read_json():
     except:
         print("Cannot open config file.  Please make sure it exists and is configured")
         logging.error("Could not open config file.  Please make sure it exists and is configured")
+        # see if we can run the check_config module
+        check = check_config()
+        check.check_for_configs()
         sys.exit(1)
-
-
     return data
+
 
 def use_list(passed_list):
     return passed_list
+
 
 def output_config():
     returned_list = read_json()
