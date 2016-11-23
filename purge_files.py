@@ -34,8 +34,8 @@ def remove_old_files():
 
 
     # REMOVE THIS FROM HERE....
-    days_in_month = days_in_month - 8
-    print(days_in_month)
+    #days_in_month = days_in_month - 8
+    #print(days_in_month)
     # TO HERE
 
     for old_logs in old_logfiles:
