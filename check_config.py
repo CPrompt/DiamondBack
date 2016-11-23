@@ -43,14 +43,14 @@ data = {
         "title": "BACKUP",
 
         "directories": [{
-            "directoryBackup": "/home/curtis/Programming/DiamondBack_dev/folder2/",
-            "redundantBackup": "/path/to/redundant/backup"
+            "directoryBackup": "/path/to/main/backup/",
+            "redundantBackup": "/path/to/redundant/backup/"
         }],
 
         "files": [{
-            "filesBackup": "/home/curtis/.config/diamondback/filelist",
-            "outputFile": "/home/curtis/.config/diamondback/out.log",
-            "ignoredFiles": "/home/curtis/.config/diamondback/ignored"
+            "filesBackup": "/home/user/.config/diamondback/filelist",
+            "outputFile": "/home/user/.config/diamondback/out.log",
+            "ignoredFiles": "/home/user/.config/diamondback/ignored"
         }]
 
     }

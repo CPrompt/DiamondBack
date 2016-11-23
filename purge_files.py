@@ -6,8 +6,10 @@ import glob
 import datetime
 from datetime import date
 import calendar
+from read_json import output_config
+from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
 
-log_directory = "/home/curtis/Programming/DiamondBack_dev/folder2/"
+log_directory = directory_of_backup
 old_logfiles = glob.glob(os.path.join(log_directory, '*.*'))
 
 
