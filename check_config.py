@@ -96,8 +96,6 @@ class check_config:
 		except:
 			print "ERROR! Had issues checking for config files and directories!"
 			logging.error("Directory is there but could not create files")
-                        # not going any further, so end the program
-                        sys.exit(1)
 	else:
 		#	Try to create the config directory
 		try:
