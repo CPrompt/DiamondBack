@@ -33,8 +33,8 @@ diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
 diamond_back_out = os.path.join(diamond_back_home, 'out.log')
 diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
 
-	# list of all the config files and directory
-	# we loop through these files one by one to see if they are there
+# list of all the config files and directory
+# we loop through these files one by one to see if they are there
 diamond_back_files = (diamond_back_config, diamond_back_out, diamond_back_filelist)
 
 data = {
@@ -61,12 +61,7 @@ logging.basicConfig(filename='error.log',level=logging.DEBUG)
 class check_config:
 
     def directory_is_writable(self,path):
-	'''
-	Returns True if the specified directory exists and is writable
-	by the current user.
-	Borrowed from gPodder util.py
-	'''
-	return os.path.isdir(path) and os.access(path, os.W_OK)
+        return os.path.isdir(path) and os.access(path, os.W_OK)
 
 
     def check_for_config_files(self):
@@ -88,25 +83,23 @@ class check_config:
 
 
     def check_for_configs(self):
-	#	first check if the config directory is there
+        # first check if the config directory is there
         if (self.directory_is_writable(diamond_back_home)):
-		try:
-		#	directory is there, move on to files
-			self.check_for_config_files()
-		except:
-			print "ERROR! Had issues checking for config files and directories!"
-			logging.error("Directory is there but could not create files")
-	else:
-		#	Try to create the config directory
-		try:
-			os.makedirs(diamond_back_home)
-			print "Directory Created"
-			#	Now go back and check for config files
-			self.check_for_config_files()
-		except:
-			logging.error("Could not create file")
-                        # if the config directory isn't there, we can go no further
-                        # end the program
-                        sys.exit(1)
+            try:
+                self.check_for_config_files()
+            except:
+                print("ERROR! Had issues checking for config files and directories!")
+                logging.error("Directory is there but could not create files")
+        else:
+            try:
+                os.makedirs(diamond_back_home)
+                print("Directory Created")
+                # Now go back and check for config files
+                self.check_for_config_files()
+            except:
+                logging.error("Could not create file")
+                # if the config directory isn't there, we can go no further
+                # end the program
+                sys.exit(1)
 
 

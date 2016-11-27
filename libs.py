@@ -48,57 +48,54 @@ class BackupData():
             '''
             return os.path.isdir(path) and os.access(path, os.W_OK)
 
-	def check_files(self):
-		# Check for config directory and files
-		config_check = check_config()
-		config_check.check_for_configs()
+        def check_files(self):
+            # Check for config directory and files
+            config_check = check_config()
+            config_check.check_for_configs()
 
-	#	backup compression
-	def compress_backup(self,backupName):
+        # backup compression
+        def compress_backup(self,backupName):
 
-                # check for the config files
-                self.check_files()
+            # check for the config files
+            self.check_files()
 
-                # going to move this off to it's own module to make it more "global"?
-                # keeping this because we might move it back
+            # going to move this off to it's own module to make it more "global"?
+            # keeping this because we might move it back
 
-                # set varialbe names from the read_json file
-                #backupName = output_config()["backupprefs"]["title"]
-                #directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
-                #redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
-                #files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
-                #ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
+            # set varialbe names from the read_json file
+            #backupName = output_config()["backupprefs"]["title"]
+            #directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
+            #redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
+            #files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
+            #ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
 
-                # at this point we have confirmed the files needed are there and we can read the config file
-                # now we need to make sure the backup directory is actually there and ready
+            # at this point we have confirmed the files needed are there and we can read the config file
+            # now we need to make sure the backup directory is actually there and ready
 
-                if(self.directory_is_writable(directory_of_backup)):
+            if(self.directory_is_writable(directory_of_backup)):
 
-                    # check to see if we need to clear out any previous backups
-                    remove_old_files()
-
-
-                    # start the compression
-                    os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
-
-                    # Start the backup process
-                    file1 = ('%s_%s.7z' % (backupName,myTime))
-
-                    # need to make sure where we are because that's where the compressed file will be
-                    path = os.getcwd()
-
-                    # move the files to the backup directory
-                    for name in glob.glob(path + '//*.7z.*'):
-                        shutil.move(name,directory_of_backup)
-
-                else:
-                    logging.error("The backup directory does not appear to be set or ready!")
-                    sys.exit(1)
+                # check to see if we need to clear out any previous backups
+                remove_old_files()
 
 
-                if(self.directory_is_writable(redundant_backup_directory)):
-                    os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
-                else:
-                    logging.error("Either no redundant backup directory exists or it has not been set")
-                    sys.exit(1)
+                # start the compression
+                os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
+
+                # Start the backup process
+                file1 = ('%s_%s.7z' % (backupName,myTime))
+                # need to make sure where we are because that's where the compressed file will be
+                path = os.getcwd()
+
+                # move the files to the backup directory
+                for name in glob.glob(path + '//*.7z.*'):
+                    shutil.move(name,directory_of_backup)
+            else:
+                logging.error("The backup directory does not appear to be set or ready!")
+                sys.exit(1)
+				
+            if(self.directory_is_writable(redundant_backup_directory)):
+                os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
+            else:
+                logging.error("Either no redundant backup directory exists or it has not been set")
+                sys.exit(1)
 
