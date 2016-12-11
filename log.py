@@ -1,15 +1,15 @@
 import logging
 from logging.handlers import TimedRotatingFileHandler
+import os
 
-class monitor_log:
+def log_setup():
 
-    def log_setup(self):
-        logger = logging.getLogger("DiamondBack")
-        #hdlr = logging.FileHandler("/home/curtis/.config/diamondback/dback.log")
-        hdlr = TimedRotatingFileHandler("/home/curtis/.config/diamondback/dback.log",when = "D",interval = 30,backupCount = 30)
-        formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
-        logger.addHandler(hdlr)
-        logger.setLevel(logging.DEBUG)
+    diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
+    logger = logging.getLogger("DiamondBack")
+    hdlr = TimedRotatingFileHandler(diamond_back_home + "/" + "dback.log",when = "D",interval = 30,backupCount = 30)
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(message)s")
+    hdlr.setFormatter(formatter)
+    logger.addHandler(hdlr)
+    logger.setLevel(logging.DEBUG)
 
-        return logger
-
+    return logger
