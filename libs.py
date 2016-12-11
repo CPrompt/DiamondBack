@@ -26,10 +26,6 @@ import os
 import shutil
 import sys
 import glob
-<<<<<<< HEAD
-import logging
-=======
->>>>>>> logging
 from time import strftime
 from check_config import check_config
 from read_json import output_config
@@ -37,11 +33,7 @@ from config import backupName, directory_of_backup, redundant_backup_directory, 
 from purge_files import remove_old_files
 from log import *
 
-<<<<<<< HEAD
-logging.basicConfig(filename='errors.log',level=logging.DEBUG)
-=======
 logger = log_setup()
->>>>>>> logging
 myTime = strftime("%Y-%m-%d-%H%M%S")
 
 class BackupData():
@@ -74,12 +66,9 @@ class BackupData():
                 # check to see if we need to clear out any previous backups
                 remove_old_files()
 
-<<<<<<< HEAD
-=======
                 # log the start
                 logger.info("Starting the process")
 
->>>>>>> logging
                 # start the compression
                 os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
 
@@ -92,12 +81,12 @@ class BackupData():
                 for name in glob.glob(path + '//*.7z.*'):
                     shutil.move(name,directory_of_backup)
             else:
-                logging.error("The backup directory does not appear to be set or ready!")
+                logger.error("The backup directory does not appear to be set or ready!")
                 sys.exit(1)
 
             if(self.directory_is_writable(redundant_backup_directory)):
                 os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
             else:
-                logging.error("Either no redundant backup directory exists or it has not been set")
+                logger.error("Either no redundant backup directory exists or it has not been set")
                 sys.exit(1)
 
