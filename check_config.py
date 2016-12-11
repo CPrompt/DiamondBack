@@ -27,6 +27,7 @@ import os
 import shutil
 import logging
 import json
+from log import * 
 
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
 diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
@@ -35,6 +36,9 @@ diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
 # list of all the config files and directory
 # we loop through these files one by one to see if they are there
 diamond_back_files = (diamond_back_config, diamond_back_filelist)
+
+logger = log_setup()
+
 
 data = {
     "backupprefs": {
@@ -55,7 +59,6 @@ data = {
     }
 }
 
-#logging.basicConfig(filename='error.log',level=logging.DEBUG)
 
 class check_config:
 
@@ -75,10 +78,10 @@ class check_config:
                         with open(diamond_back_config, 'w') as outfile:
                             json.dump(data, outfile, sort_keys = True, indent = 4)
                             outfile.close()
-                            #logging.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
+                            logger.warning("Config file had to be created.  Program will not operate correctly until configuration of these files")
                     else:
                         files = open(files, 'w+')
-                        #logging.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
+                        logger.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
 
 
     def check_for_configs(self):
@@ -88,7 +91,7 @@ class check_config:
                 self.check_for_config_files()
             except:
                 print("ERROR! Had issues checking for config files and directories!")
-                #logging.error("Directory is there but could not create files")
+                logger.error("Directory is there but could not create files")
         else:
             try:
                 os.makedirs(diamond_back_home)
@@ -96,7 +99,7 @@ class check_config:
                 # Now go back and check for config files
                 self.check_for_config_files()
             except:
-                #logging.error("Could not create file")
+                logger.error("Could not create file")
                 # if the config directory isn't there, we can go no further
                 # end the program
                 sys.exit(1)

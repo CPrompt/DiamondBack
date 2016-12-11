@@ -26,23 +26,14 @@ import os
 import shutil
 import sys
 import glob
-#import logging
-from log import monitor_logs
 from time import strftime
 from check_config import check_config
 from read_json import output_config
 from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
 from purge_files import remove_old_files
+from log import *
 
-#logging.basicConfig(filename='errors.log',level=logging.DEBUG)
-#logger = logging.getLogger('Diamondback')
-#hdlr = logging.FileHandler('/home/curtis/.config/diamondback/dback.log')
-#formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-#hdlr.setFormatter(formatter)
-#logger.addHandler(hdlr)
-#logger.setLevel(logging.DEBUG)
-
-
+logger = log_setup()
 myTime = strftime("%Y-%m-%d-%H%M%S")
 
 class BackupData():
@@ -67,16 +58,6 @@ class BackupData():
             # check for the config files
             self.check_files()
 
-            # going to move this off to it's own module to make it more "global"?
-            # keeping this because we might move it back
-
-            # set varialbe names from the read_json file
-            #backupName = output_config()["backupprefs"]["title"]
-            #directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
-            #redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
-            #files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
-            #ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
-
             # at this point we have confirmed the files needed are there and we can read the config file
             # now we need to make sure the backup directory is actually there and ready
 
@@ -87,7 +68,6 @@ class BackupData():
 
                 # log the start
                 logger.info("Starting the process")
-
 
                 # start the compression
                 os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
