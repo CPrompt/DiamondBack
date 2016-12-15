@@ -8,7 +8,9 @@ from datetime import date
 import calendar
 from read_json import output_config
 from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
+from log import *
 
+logger = log_setup()
 log_directory = directory_of_backup
 old_logfiles = glob.glob(os.path.join(log_directory, '*.*'))
 
@@ -33,11 +35,6 @@ def remove_old_files():
     days_in_month = determine_last_day(current_date)
 
 
-    # REMOVE THIS FROM HERE....
-    #days_in_month = days_in_month - 8
-    #print(days_in_month)
-    # TO HERE
-
     for old_logs in old_logfiles:
         stat_info = os.stat(old_logs).st_mtime
         # change the st_mtime infor into a datestamp we can use better
@@ -59,9 +56,9 @@ def remove_old_files():
                     try:
                         os.remove(old_logs)
                     except:
-                        print("Could not remove files")
+                        logger.error("Coult not remove files")
                 else:
-                    print("No files to remove")
+                    logger.info("No files to remove")
         else:
             print("Still more days until the end of the month")
 
