@@ -59,9 +59,6 @@ def remove_old_files():
                         logger.error("Coult not remove files")
                 else:
                     logger.info("No files to remove")
-        else:
-            print("Still more days until the end of the month")
-
 
 
 

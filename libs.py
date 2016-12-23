@@ -25,6 +25,7 @@
 import os
 import shutil
 import sys
+import subprocess
 import glob
 from time import strftime
 from check_config import check_config
@@ -34,7 +35,11 @@ from purge_files import remove_old_files
 from log import *
 
 logger = log_setup()
+
+# variables that are used to pass to 7z command
 myTime = strftime("%Y-%m-%d-%H%M%S")
+file_name = backupName + "_" + myTime
+fileList = "@" + files_for_backup
 
 class BackupData():
 
@@ -70,10 +75,19 @@ class BackupData():
                 logger.info("Starting the process")
 
                 # start the compression
-                os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
+                #os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
+                compress_files = subprocess.Popen(
+                        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,"-v1024M",fileList],
+                        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
+                output,err = compress_files.communicate()
+                logger.info(output)
+                logger.info(err)
+                #print(output)
+                #print(err)
 
                 # Start the backup process
-                file1 = ('%s_%s.7z' % (backupName,myTime))
+                #file1 = ('%s.7z' % (file_name))
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
 
@@ -85,7 +99,9 @@ class BackupData():
                 sys.exit(1)
 
             if(self.directory_is_writable(redundant_backup_directory)):
-                os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
+                #os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
+                redundant_files = subprocess.Popen(["rsync","-avz",directory_of_backup,redundant_backup_directory],
+                        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             else:
                 logger.error("Either no redundant backup directory exists or it has not been set")
                 sys.exit(1)
