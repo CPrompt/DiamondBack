@@ -33,6 +33,7 @@ from read_json import output_config
 from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
 from purge_files import remove_old_files
 from log import *
+from email_log import email_log_files
 
 logger = log_setup()
 
@@ -82,13 +83,11 @@ class BackupData():
                 output,err = compress_files.communicate()
                 rc = compress_files.returncode
                 if rc == 0:
-                    # going to move this to email but will remain here for now
-                    # see TODO_file #2
-                    # email : email_log(output)
                     logger.info("Backup has completed successfully")
+                    email_log_files(output)
                 else:
-                    # email : email_log(err)
                     logger.error("There was an error in the backup processes.  Please review the logs further")
+                    email_log_files(err)
 
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
