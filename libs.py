@@ -75,19 +75,14 @@ class BackupData():
                 logger.info("Starting the process")
 
                 # start the compression
-                #os.system('7z a -t7z -m0=lzma -mx=9 -mfb=64 -ms=on %s_%s.7z -xr!%s -v1024M @%s' % (backupName,myTime,ignored_files,files_for_backup))
                 compress_files = subprocess.Popen(
                         ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,"-v1024M",fileList],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
-                logger.info(output)
-                logger.info(err)
-                #print(output)
-                #print(err)
+                #logger.info(output)
+                #logger.info(err)
 
-                # Start the backup process
-                #file1 = ('%s.7z' % (file_name))
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
 
@@ -99,7 +94,6 @@ class BackupData():
                 sys.exit(1)
 
             if(self.directory_is_writable(redundant_backup_directory)):
-                #os.system('rsync -avz %s %s' % (directory_of_backup,redundant_backup_directory))
                 redundant_files = subprocess.Popen(["rsync","-avz",directory_of_backup,redundant_backup_directory],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             else:
