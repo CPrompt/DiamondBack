@@ -84,8 +84,10 @@ class BackupData():
                 if rc == 0:
                     # going to move this to email but will remain here for now
                     # see TODO_file #2
+                    # email : email_log(output)
                     logger.info("Backup has completed successfully")
                 else:
+                    # email : email_log(err)
                     logger.error("There was an error in the backup processes.  Please review the logs further")
 
                 # need to make sure where we are because that's where the compressed file will be
