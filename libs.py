@@ -80,8 +80,13 @@ class BackupData():
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
-                #logger.info(output)
-                #logger.info(err)
+                rc = compress_files.returncode
+                if rc == 0:
+                    # going to move this to email but will remain here for now
+                    # see TODO_file #2
+                    logger.info("Backup has completed successfully")
+                else:
+                    logger.error("There was an error in the backup processes.  Please review the logs further")
 
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
