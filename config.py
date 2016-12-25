@@ -21,3 +21,5 @@ directory_of_backup = output_config()["backupprefs"]["directories"][0]["director
 redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
 files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
 ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
+email_for_logs = output_config()["backupprefs"]["email_for_logs"]
+email_server = output_config()["backupprefs"]["email_server"]

@@ -54,7 +54,10 @@ data = {
             "filesBackup": "/home/user/.config/diamondback/filelist",
             "outputFile": "/home/user/.config/diamondback/out.log",
             "ignoredFiles": "/home/user/.config/diamondback/ignored"
-        }]
+        }],
+
+        "email_for_logs": "myemail@server.com",
+        "email_server": "localhost"
 
     }
 }

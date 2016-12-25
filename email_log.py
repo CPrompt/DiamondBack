@@ -23,14 +23,14 @@
 # Email to localhost.  This will take the place of cron sending the email when moved to systemd service
 
 import smtplib
+from config import email_for_logs, email_server
 
-my_email = "curtis@wayne-manor.gotham"
 email_log_subject = "DiamondBack Logs"
 
 def email_log_files(log_text):
     msg = "Subject: %s\n\n%s" %(email_log_subject,log_text)
-    s = smtplib.SMTP('localhost')
-    s.sendmail(my_email,[my_email],msg)
+    s = smtplib.SMTP(email_server)
+    s.sendmail(email_for_logs,email_for_logs,msg)
     s.quit()
 
 
