@@ -28,6 +28,7 @@ import logging
 import sys
 from check_config import check_config
 from log import *
+import config
 
 logger = log_setup()
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
