@@ -23,3 +23,8 @@ files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
 ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
 email_for_logs = output_config()["backupprefs"]["email_for_logs"]
 email_server = output_config()["backupprefs"]["email_server"]
+
+
+#diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
+#diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
+#diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
