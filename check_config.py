@@ -28,10 +28,11 @@ import shutil
 import logging
 import json
 from log import *
+from config import diamond_back_home, diamond_back_config, diamond_back_filelist
 
-diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
-diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
-diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
+#diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
+#diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
+#diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
 
 # list of all the config files and directory
 # we loop through these files one by one to see if they are there
