@@ -28,7 +28,8 @@ from config import email_for_logs, email_server
 email_log_subject = "DiamondBack Logs"
 
 def email_log_files(log_text):
-    msg = "Subject: %s\n\n%s" %(email_log_subject,log_text)
+    log_text = bytes.decode(log_text)
+    msg = "Subject: %s\n%s" %(email_log_subject,log_text)
     s = smtplib.SMTP(email_server)
     s.sendmail(email_for_logs,email_for_logs,msg)
     s.quit()
