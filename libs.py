@@ -41,6 +41,7 @@ logger = log_setup()
 myTime = strftime("%Y-%m-%d-%H%M%S")
 file_name = backupName + "_" + myTime
 fileList = "@" + files_for_backup
+ignored_files = "@" + ignored_files
 
 class BackupData():
 
@@ -77,7 +78,7 @@ class BackupData():
 
                 # start the compression
                 compress_files = subprocess.Popen(
-                        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,"-v1024M",fileList],
+                        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,"-v1024M",fileList,"-xr",ignored_files],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
