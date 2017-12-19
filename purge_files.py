@@ -54,6 +54,7 @@ def remove_old_files():
                     # here we are going to try to delete records.
                     #print(old_logs)
                     try:
+                        logger.info("Removing old files....")
                         os.remove(old_logs)
                     except:
                         logger.error("Coult not remove files")
