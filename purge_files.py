@@ -59,6 +59,8 @@ def remove_old_files():
                         logger.error("Coult not remove files")
                 else:
                     logger.info("No files to remove")
+        else:
+            logger.info("No files to remove")
 
 
 
