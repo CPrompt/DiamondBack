@@ -25,10 +25,16 @@
 
 from libs import *
 from read_json import *
-
+import signal
+import sys
 
 backupName = output_config()["backupprefs"]["title"]
 
 f = BackupData()
 f.check_files()
-f.compress_backup(backupName)
+
+try:
+    f.compress_backup(backupName)
+except KeyboardInterrupt:
+    print("Backup has been canceled")
+    sys.exit(0)
