@@ -33,8 +33,9 @@ backupName = output_config()["backupprefs"]["title"]
 f = BackupData()
 f.check_files()
 
-try:
-    f.compress_backup(backupName)
-except KeyboardInterrupt:
-    print("Backup has been canceled")
-    sys.exit(0)
+if __name__ == "__main__":
+    try:
+        f.compress_backup(backupName)
+    except KeyboardInterrupt:
+        print("Backup has been canceled")
+        sys.exit(0)
