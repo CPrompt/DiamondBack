@@ -90,8 +90,13 @@ class BackupData():
                     logger.error("There was an error in the backup processes.  Please review the logs further")
                     email_log_files(err)
 
+
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
+
+                # var path set to tmp directory where we create the backup file
+                #path = "/tmp/"
+
 
                 # move the files to the backup directory
                 for name in glob.glob(path + '//*.7z.*'):
