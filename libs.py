@@ -78,7 +78,7 @@ class BackupData():
 
                 # start the compression
                 compress_files = subprocess.Popen(
-                        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,fileList,ignored_files,"-w/tmp/"],
+                        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,fileList,ignored_files],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
