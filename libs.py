@@ -94,10 +94,6 @@ class BackupData():
                 # need to make sure where we are because that's where the compressed file will be
                 path = os.getcwd()
 
-                # var path set to tmp directory where we create the backup file
-                #path = "/tmp/"
-
-
                 # move the files to the backup directory
                 for name in glob.glob(path + '//*.7z.*'):
                     shutil.move(name,directory_of_backup)
