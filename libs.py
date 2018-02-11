@@ -77,6 +77,7 @@ class BackupData():
                 logger.info("Starting the process")
 
                 # start the compression
+                # change this to use the tar command instead
                 compress_files = subprocess.Popen(
                         ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,fileList,ignored_files],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
