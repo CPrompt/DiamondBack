@@ -84,7 +84,7 @@ class BackupData():
                 # tar command:
                 # tar Jcfv /tmp/test_xz.tar.xz -T /home/curtis/.config/diamondback/fileage -X /home/curtis/.config/diamondback/ignored
                 
-                compress_files = subprocess.Popen(["tar","cfv",path + "TEST_" + myTime + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                compress_files = subprocess.Popen(["tar","cfv",path + "BACKUP_" + myTime + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
                 # run tar
                 #compress_files = subprocess.Popen(["tar","Jcfv",path + "BACKUP_" + myTime + ".tar.xz","-T",fileList,"-X",ignored_files],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
