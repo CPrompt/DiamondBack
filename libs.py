@@ -39,6 +39,7 @@ logger = log_setup()
 
 # variables that are used to pass to 7z command
 myTime = strftime("%Y-%m-%d-%H%M%S")
+file_name = backupName + "_" + myTime
 
 path = "/tmp/"
 
@@ -76,17 +77,8 @@ class BackupData():
                 logger.info("Starting the process")
 
                 # start the compression
-                # change this to use the tar command instead
-                #compress_files = subprocess.Popen(
-                #        ["7z","a","-bt","-m0=lzma","-mx=9","-t7z",file_name,fileList,ignored_files],
-                #        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-
-                # tar command:
-                # tar Jcfv /tmp/test_xz.tar.xz -T /home/curtis/.config/diamondback/fileage -X /home/curtis/.config/diamondback/ignored
-                
-                compress_files = subprocess.Popen(["tar","cfv",path + "BACKUP_" + myTime + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-                # run tar
-                #compress_files = subprocess.Popen(["tar","Jcfv",path + "BACKUP_" + myTime + ".tar.xz","-T",fileList,"-X",ignored_files],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                compress_files = subprocess.Popen(["tar","cfv",path + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],
+                        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
                 
