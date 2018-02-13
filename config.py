@@ -19,6 +19,7 @@ from read_json import output_config
 backupName = output_config()["backupprefs"]["title"]
 directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
 redundant_backup_directory = output_config()["backupprefs"]["directories"][0]["redundantBackup"]
+temp_directory = output_config()["backupprefs"]["directories"][0]["tempDirectory"]
 files_for_backup = output_config()["backupprefs"]["files"][0]["filesBackup"]
 ignored_files = output_config()["backupprefs"]["files"][0]["ignoredFiles"]
 email_for_logs = output_config()["backupprefs"]["email_for_logs"]

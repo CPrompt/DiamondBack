@@ -30,7 +30,7 @@ import glob
 from time import strftime
 from check_config import check_config
 from read_json import output_config
-from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
+from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files, temp_directory
 from purge_files import remove_old_files
 from log import *
 from email_log import email_log_files
@@ -41,7 +41,6 @@ logger = log_setup()
 myTime = strftime("%Y-%m-%d-%H%M%S")
 file_name = backupName + "_" + myTime
 
-path = "/tmp/"
 
 class BackupData():
 
@@ -77,7 +76,7 @@ class BackupData():
                 logger.info("Starting the process")
 
                 # start the compression
-                compress_files = subprocess.Popen(["tar","cfv",path + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],
+                compress_files = subprocess.Popen(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
 
                 output,err = compress_files.communicate()
@@ -96,7 +95,7 @@ class BackupData():
                 #path = os.getcwd()
 
                 # move the files to the backup directory
-                for name in glob.glob(path + '//*.tar.lzma'):
+                for name in glob.glob(temp_directory + '//*.tar.lzma'):
                     shutil.move(name,directory_of_backup)
 
             else:
