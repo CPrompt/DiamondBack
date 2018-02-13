@@ -91,9 +91,6 @@ class BackupData():
                     email_log_files(err)
 
 
-                # need to make sure where we are because that's where the compressed file will be
-                #path = os.getcwd()
-
                 # move the files to the backup directory
                 for name in glob.glob(temp_directory + '//*.tar.lzma'):
                     shutil.move(name,directory_of_backup)
