@@ -10,6 +10,7 @@ from read_json import output_config
 from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files
 from log import *
 
+diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
 logger = log_setup()
 log_directory = directory_of_backup
 old_logfiles = glob.glob(os.path.join(log_directory, '*.*'))
