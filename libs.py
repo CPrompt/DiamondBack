@@ -37,7 +37,7 @@ from email_log import email_log_files
 
 logger = log_setup()
 
-# variables that are used to pass to 7z command
+# variables that are used to pass to tar command
 myTime = strftime("%Y-%m-%d-%H%M%S")
 file_name = backupName + "_" + myTime
 
