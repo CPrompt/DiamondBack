@@ -57,7 +57,7 @@ def remove_old_files():
                         logger.info("Removing old files....")
                         os.remove(old_logs)
                     except:
-                        logger.error("Coult not remove files")
+                        logger.error("Could not remove files")
                 else:
                     logger.info("No files to remove")
         else:
