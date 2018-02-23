@@ -52,7 +52,7 @@ def log_setup():
 
 def remove_old_files():
 
-    logger = log_setup()
+    log_process = log_setup()
     message = ""
 
     current_day_in_month = int(current_weekday[0])
@@ -102,11 +102,11 @@ def remove_old_files():
 
     if (len(files_found) == 0):
         print(message)
-        logger.info(message)
+        log_process.info(message)
     else:
         print(message)
-        logger.warning("WARNING!")
-        logger.info(files_found)
+        log_process.warning("WARNING!")
+        log_process.info(files_found)
     
     
 
