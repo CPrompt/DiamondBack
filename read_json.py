@@ -24,7 +24,6 @@
 
 import json
 import os
-import logging
 import sys
 from check_config import check_config
 from log import *
@@ -55,4 +54,6 @@ def output_config():
     config_dict = use_list(returned_list)
     return config_dict
 
+if __name__ == "__main__":
+    output_config()
 

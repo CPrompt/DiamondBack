@@ -88,6 +88,7 @@ class BackupData():
                     email_log_files(output)
                 else:
                     logger.error("There was an error in the backup processes.  Please review the logs further")
+                    logger.error(rc)
                     email_log_files(err)
 
 

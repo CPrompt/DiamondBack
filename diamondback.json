@@ -1,0 +1,21 @@
+{
+    "backupprefs": {
+        "directories": [
+            {
+                "directoryBackup": "/media/BATBELT/BACKUPS/PyBackup/",
+                "redundantBackup": "/media/BATWING/BACKUPS/PyBackup/",
+				"tempDirectory": "/tmp/"
+            }
+        ],
+        "files": [
+            {
+                "filesBackup": "/home/curtis/.config/diamondback/filelist",
+                "ignoredFiles": "/home/curtis/.config/diamondback/ignored",
+                "outputFile": "/home/curtis/.config/diamondback/dback.log"
+            }
+        ],
+        "title": "BACKUP",
+	"email_for_logs": "curtis@wayne-manor.gotham",
+	"email_server": "localhost"
+    }
+}
