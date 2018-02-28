@@ -7,11 +7,21 @@ import datetime
 from datetime import date
 import calendar
 from read_json import output_config
-from config import directory_of_backup
-from log import log_setup
+from config import directory_of_backup,outputFile
+#from log import log_setup
+from yaml_log import configure_logger
 
 log_directory = directory_of_backup
 old_logfiles = glob.glob(os.path.join(log_directory, '*.*'))
+
+# ----------------
+# need to call the configure_logger function
+# alog = configure_logger('default',path_to_log_file)
+# alog.info("Info")
+# alog.error("ERROR")
+# etc...
+# ----------------
+alog = configure_logger('default',outputFile)
 
 # current year and month
 # based on 2018-02-23
@@ -69,8 +79,9 @@ def remove_old_files():
         else:
             message = "Not the end of the month"
 
-    logger = log_setup()
-    logger.info(message)
+    #logger = log_setup()
+    #logger.info(message)
+    alog.info(message)
 
 if __name__ == "__main__":
     remove_old_files()

@@ -30,12 +30,14 @@ import glob
 from time import strftime
 from check_config import check_config
 from read_json import output_config
-from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files, temp_directory
+from config import backupName, directory_of_backup, redundant_backup_directory, files_for_backup, ignored_files, temp_directory, outputFile
 from purge_files import remove_old_files
-from log import *
+#from log import *
 from email_log import email_log_files
+from yaml_log import configure_logger
 
-logger = log_setup()
+#logger = log_setup()
+alog = configure_logger('default',outputFile)
 
 # variables that are used to pass to tar command
 myTime = strftime("%Y-%m-%d-%H%M%S")
@@ -73,7 +75,8 @@ class BackupData():
                 remove_old_files()
 
                 # log the start
-                logger.info("Starting the process")
+                #logger.info("Starting the process")
+                alog.info("Starting the process")
 
                 # start the compression
                 compress_files = subprocess.Popen(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],
@@ -84,11 +87,14 @@ class BackupData():
                 rc = compress_files.returncode
 
                 if rc == 0:
-                    logger.info("Backup has completed successfully")
+                    #logger.info("Backup has completed successfully")
+                    alog.info("Backup has completed successfully")
                     email_log_files(output)
                 else:
-                    logger.error("There was an error in the backup processes.  Please review the logs further")
-                    logger.error(rc)
+                    #logger.error("There was an error in the backup processes.  Please review the logs further")
+                    alog.error("There was an error in the backup processes.  Please review the logs further")
+                    #logger.error(rc)
+                    alog.error(rc)
                     email_log_files(err)
 
 
@@ -97,13 +103,15 @@ class BackupData():
                     shutil.move(name,directory_of_backup)
 
             else:
-                logger.error("The backup directory does not appear to be set or ready!")
+                #logger.error("The backup directory does not appear to be set or ready!")
+                alog.error("The backup directory does not appear to be set or ready!")
                 sys.exit(1)
 
             if(self.directory_is_writable(redundant_backup_directory)):
                 redundant_files = subprocess.Popen(["rsync","-avz",directory_of_backup,redundant_backup_directory],
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
             else:
-                logger.error("Either no redundant backup directory exists or it has not been set")
+                #logger.error("Either no redundant backup directory exists or it has not been set")
+                alog.error("Either no redundant backup directory exists or it has not been set")
                 sys.exit(1)
 
