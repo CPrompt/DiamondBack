@@ -62,6 +62,11 @@ def remove_old_files():
                     if(int(file_date[2]) < int(current_date[2])):
                         message = "Files found"
                         files_found.append(old_logs)
+                        # purge the old files
+                        try:
+                            os.remove(old_logs)
+                        except:
+                            message = "Could not remove old files"
                     else:
                         message = "No files found"
                 else:

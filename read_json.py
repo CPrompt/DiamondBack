@@ -30,7 +30,7 @@ from yaml_log import configure_logger
 
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
 diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
-outputFile = os.path.join(diamond_back_home, 'db.log')
+outputFile = os.path.join(diamond_back_home, 'dback.log')
 alog = configure_logger('default',outputFile)
 
 def read_json():
