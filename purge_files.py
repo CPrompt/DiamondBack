@@ -65,8 +65,9 @@ def remove_old_files():
                         # purge the old files
                         try:
                             os.remove(old_logs)
-                        except:
+                        except Exception:
                             message = "Could not remove old files"
+                            pass
                     else:
                         message = "No files found"
                 else:
