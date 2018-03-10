@@ -75,21 +75,14 @@ class BackupData():
                 # log the start
                 alog.info("Starting the process")
 
-                # start the compression
-                compress_files = subprocess.Popen(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files],
-                        stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-
-                output,err = compress_files.communicate()
-                
-                rc = compress_files.returncode
-
-                if rc == 0:
-                    alog.info("Backup has completed successfully")
-                    email_log_files(output)
-                else:
-                    alog.error("There was an error in the backup processes.  Please review the logs further")
-                    alog.error(rc)
-                    email_log_files(err)
+                # start compression
+                try:
+                    compress_files = subprocess.check_output(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files])
+                    alog.info("Backup had completed successfully")
+                    email_log_files(compress_files)
+                except subprocess.CalledProcessError, e:
+                    alog.info("There was an error in the backup process.")
+                    email_log_files(e.output)
 
 
                 # move the files to the backup directory
