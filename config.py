@@ -14,7 +14,6 @@ read by the read_json.py module
 
 from read_json import output_config
 
-
 # set varialbe names from the read_json file
 backupName = output_config()["backupprefs"]["title"]
 directory_of_backup = output_config()["backupprefs"]["directories"][0]["directoryBackup"]
