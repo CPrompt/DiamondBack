@@ -77,7 +77,7 @@ class BackupData():
 
                 # start compression
                 try:
-                    compress_files = subprocess.check_output(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-T",files_for_backup, "-X",ignored_files])
+                    compress_files = subprocess.check_output(["tar","cfv",temp_directory + file_name + ".tar.lzma","--lzma","-X",ignored_files,"-T",files_for_backup])
                     alog.info("Backup had completed successfully")
                     email_log_files(compress_files)
                 except subprocess.CalledProcessError as e:

@@ -50,7 +50,7 @@ def remove_old_files():
         time_split = str.split(file_time_stamp)[0]
             # This just splits the current date so we can parse it out
         file_date = time_split.split("-")
-        
+
         # we only want to do this on the last day of the month!
         if(current_day_in_month == days_in_month):
              # does the file year matches the current year
