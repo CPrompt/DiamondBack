@@ -29,6 +29,8 @@ import logging
 import json
 from yaml_log import configure_logger
 
+# hard coding these vars because we may not have the json file
+# and if we do, we might not be able to read it
 diamond_back_home = os.path.expanduser(os.path.join('~/.config', 'diamondback'))
 diamond_back_config = os.path.join(diamond_back_home, 'diamondback.json')
 diamond_back_filelist = os.path.join(diamond_back_home, 'filelist')
@@ -63,11 +65,14 @@ data = {
 }
 
 class check_config:
-
+    # this function is just used to check if a specific directory is
+    # there and available to be written to
     def directory_is_writable(self,path):
         return os.path.isdir(path) and os.access(path, os.W_OK)
 
-
+    # used to check if the config files are there and we can read them
+    # if any of the files listed in the dict above are not there,
+    # then we create them with a blank template and raise an error
     def check_for_config_files(self):
         for files in diamond_back_files:
             try:
@@ -85,7 +90,9 @@ class check_config:
                         files = open(files, 'w+')
                         alog.warning("%s had to be created.  Program will not operate correctly until configuration of these files" % (files))
 
-
+    # This is where we check for the actual config directory
+    # if it's there, we move on to see if the config files are there and rinse and repeat
+    # if they are not there, then we try to create them
     def check_for_configs(self):
         # first check if the config directory is there
         if (self.directory_is_writable(diamond_back_home)):
